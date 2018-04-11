@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -162,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
      * changes the text of the Ready Button (a.k.a. Submit Button)
      */
     public void buttonClick(View view) {
+        ImageView imageview = findViewById(R.id.android_bg_image_view);
+        imageview.setImageResource(0);
         changeButtonText();
         if (question_num > 10)
             resetAll();
