@@ -3,28 +3,21 @@ package com.example.android.androidbasicsknowledgequiz;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.content.Intent;
-import android.graphics.Color;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
     int total_score = 0;
     int question_num = 0;
+    String user_name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * updates the quiz question respective to the @current_question
+     * when user is done with all the questions, "your final score" is shown
      */
     public void changeQuestion(int current_question) {
         TextView textview = findViewById(R.id.quiz_question_text_view);
@@ -69,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
                 textview.setText(R.string.question10);
                 break;
             case 11:
+                textview.setText(R.string.bonus_q);
+                break;
+            case 12:
                 textview.setText("Your total score is\n");
                 textview.setTextSize(48);
                 showFinalResult();
@@ -80,15 +77,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void showRadioButtons() {
         RadioButton radiobutton = findViewById(R.id.radioButton_1);
-        radiobutton.setVisibility(radiobutton.VISIBLE);
+        radiobutton.setVisibility(View.VISIBLE);
         radiobutton = findViewById(R.id.radioButton_2);
-        radiobutton.setVisibility(radiobutton.VISIBLE);
+        radiobutton.setVisibility(View.VISIBLE);
         radiobutton = findViewById(R.id.radioButton_3);
-        radiobutton.setVisibility(radiobutton.VISIBLE);
+        radiobutton.setVisibility(View.VISIBLE);
         radiobutton = findViewById(R.id.radioButton_4);
-        radiobutton.setVisibility(radiobutton.VISIBLE);
+        radiobutton.setVisibility(View.VISIBLE);
         radiobutton = findViewById(R.id.radioButton_5);
-        radiobutton.setVisibility(radiobutton.VISIBLE);
+        radiobutton.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -96,15 +93,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void hideRadioButtons() {
         RadioButton radiobutton = findViewById(R.id.radioButton_1);
-        radiobutton.setVisibility(radiobutton.INVISIBLE);
+        radiobutton.setVisibility(View.INVISIBLE);
         radiobutton = findViewById(R.id.radioButton_2);
-        radiobutton.setVisibility(radiobutton.INVISIBLE);
+        radiobutton.setVisibility(View.INVISIBLE);
         radiobutton = findViewById(R.id.radioButton_3);
-        radiobutton.setVisibility(radiobutton.INVISIBLE);
+        radiobutton.setVisibility(View.INVISIBLE);
         radiobutton = findViewById(R.id.radioButton_4);
-        radiobutton.setVisibility(radiobutton.INVISIBLE);
+        radiobutton.setVisibility(View.INVISIBLE);
         radiobutton = findViewById(R.id.radioButton_5);
-        radiobutton.setVisibility(radiobutton.INVISIBLE);
+        radiobutton.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -112,15 +109,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void showCheckBoxes() {
         CheckBox checkbox = findViewById(R.id.checkbox1);
-        checkbox.setVisibility(checkbox.VISIBLE);
+        checkbox.setVisibility(View.VISIBLE);
         checkbox = findViewById(R.id.checkbox2);
-        checkbox.setVisibility(checkbox.VISIBLE);
+        checkbox.setVisibility(View.VISIBLE);
         checkbox = findViewById(R.id.checkbox3);
-        checkbox.setVisibility(checkbox.VISIBLE);
+        checkbox.setVisibility(View.VISIBLE);
         checkbox = findViewById(R.id.checkbox4);
-        checkbox.setVisibility(checkbox.VISIBLE);
+        checkbox.setVisibility(View.VISIBLE);
         checkbox = findViewById(R.id.checkbox5);
-        checkbox.setVisibility(checkbox.VISIBLE);
+        checkbox.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -128,59 +125,102 @@ public class MainActivity extends AppCompatActivity {
      */
     public void hideCheckBoxes() {
         CheckBox checkbox = findViewById(R.id.checkbox1);
-        checkbox.setVisibility(checkbox.INVISIBLE);
+        checkbox.setVisibility(View.INVISIBLE);
         checkbox = findViewById(R.id.checkbox2);
-        checkbox.setVisibility(checkbox.INVISIBLE);
+        checkbox.setVisibility(View.INVISIBLE);
         checkbox = findViewById(R.id.checkbox3);
-        checkbox.setVisibility(checkbox.INVISIBLE);
+        checkbox.setVisibility(View.INVISIBLE);
         checkbox = findViewById(R.id.checkbox4);
-        checkbox.setVisibility(checkbox.INVISIBLE);
+        checkbox.setVisibility(View.INVISIBLE);
         checkbox = findViewById(R.id.checkbox5);
-        checkbox.setVisibility(checkbox.INVISIBLE);
+        checkbox.setVisibility(View.INVISIBLE);
     }
+
     /**
      * changes the text of the Ready Button (a.k.a Submit Button)
      */
     public void changeButtonText() {
         Button button = findViewById(R.id.start_button);
-        if (question_num >= 0 && question_num <= 10)
+        if (question_num >= 0 && question_num <= 11)
             button.setText("Submit");
-        else if (question_num >= 11)
+        else if (question_num >= 12)
             button.setText("Reset");
     }
+
     /**
      * resets everything after user has finished quiz
      */
     public void resetAll() {
         TextView textview = findViewById(R.id.quiz_question_text_view);
         LinearLayout changeBackground = findViewById(R.id.final_background);
+        EditText editText = findViewById(R.id.edit_text);
         changeBackground.setBackgroundColor(0);
         textview.setTextSize(32);
         total_score = 0;
         question_num = 0;
+        editText.setVisibility(View.VISIBLE);
+        editText.setHint("What's your name?");//test
+        user_name = "";
+        changeButtonText();
     }
+
     /**
+     * various effects when the user clicks the button
      * changes the text of the Ready Button (a.k.a. Submit Button)
+     * a Toast is made depending on name of user
+     * if username is different from the previous quiz round, another Toast is made
+     * when all questions are finished, everything is reset
      */
     public void buttonClick(View view) {
+        LinearLayout changeBackground = findViewById(R.id.final_background);//test
+        changeBackground.setBackgroundResource(0); //test
         ImageView imageview = findViewById(R.id.android_bg_image_view);
-        imageview.setImageResource(0);
+        EditText editText = findViewById(R.id.edit_text);
+        TextView textview = findViewById(R.id.quiz_question_text_view);
+        if (question_num == 0) {
+            //imageview.setImageResource(R.drawable.android_google_bg); //test
+            if (user_name == "") {
+                user_name = editText.getText().toString();
+            }
+            setToast("Best of Luck\n" + user_name);
+        }
+        imageview.setImageResource(0);  //test
+        /* useless
+        if (question_num == 1) {
+            String new_user_name = editText.getText().toString();
+            if (new_user_name != user_name) {
+                user_name = new_user_name;
+                setToast("Best of Luck6\n" + user_name); //test extra 6
+            }
+        }
+        */
+        editText.setText("");//test
+        editText.setVisibility(View.INVISIBLE); //test
         changeButtonText();
-        if (question_num > 10)
-            resetAll();
-
+        if (question_num == 12) {   //test (go to main page
+            imageview.setImageResource(R.drawable.android_google_bg);
+            textview.setText(getString(R.string.welcome_msg));
+            //editText.setText("Name Test Two"); //temp remove
+           // editText.setVisibility(View.VISIBLE); //test + temp remove
+        }
+    /*    if (question_num > 12) //fix to 11 after
+ temp           resetAll(); */
         checkAnswer(question_num);
         question_num += 1;
         /* testing purposes only*/
         final String TAG = "MyActivity";
+        Log.v(TAG, "N = " + user_name);
         Log.v(TAG, "Q = " + question_num + " Tot = " + total_score);
         /* */
         changeQuestion(question_num);
         change_answers(question_num);
+        if (question_num > 12)  //temp yay
+            resetAll();
     }
+
     /**
-     * checks the respective answers of the user of the respective @param current_question
-     * if correct, adds a point to total_score
+     * @param current_question is respecitvely checked with the respective answer(s) of the user
+     *                         if correct, adds a point to total_score
      */
     public void checkAnswer(int current_question) {
         CheckBox checkBox1 = findViewById(R.id.checkbox1);
@@ -193,19 +233,12 @@ public class MainActivity extends AppCompatActivity {
         RadioButton radioButton3 = findViewById(R.id.radioButton_3);
         RadioButton radioButton4 = findViewById(R.id.radioButton_4);
         RadioButton radioButton5 = findViewById(R.id.radioButton_5);
-        /* testing purposes only*/
-        final String TAG = "MyActivity";
-        Log.v(TAG, "cb1 = " + checkBox1.isChecked() + " cb2 = "
-                + checkBox2.isChecked() + " cb3 = "
-                + checkBox3.isChecked() + " cb4 = "
-                + checkBox4.isChecked() + " cb5 = " + checkBox5.isChecked()  );
-        /* */
-        switch(current_question) {
+        switch (current_question) {
             case 1:
-                Log.v(TAG, "test1");
-                if (checkBox2.isChecked() && checkBox4.isChecked()) {
+                if (checkBox2.isChecked() && checkBox4.isChecked()
+                        && !checkBox1.isChecked() && !checkBox3.isChecked()
+                        && !checkBox5.isChecked()) {
                     total_score += 1;
-                    Log.v(TAG, "case1");
                 }
                 break;
             case 2:
@@ -228,8 +261,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case 5:
-                if (checkBox4.isChecked()
-                        && checkBox5.isChecked()) {
+                if (checkBox4.isChecked() && checkBox5.isChecked()
+                        && !checkBox1.isChecked() && !checkBox2.isChecked()
+                        && !checkBox3.isChecked()) {
                     total_score += 1;
                 }
                 break;
@@ -237,24 +271,28 @@ public class MainActivity extends AppCompatActivity {
                 if (checkBox1.isChecked()
                         && checkBox2.isChecked()
                         && checkBox4.isChecked()
-                        && checkBox5.isChecked()) {
+                        && checkBox5.isChecked() && !checkBox3.isChecked()) {
                     total_score += 1;
                 }
                 break;
             case 7:
-                if (checkBox3.isChecked()
-                        && checkBox5.isChecked()) {
+                if (checkBox3.isChecked() && checkBox5.isChecked()
+                        && !checkBox1.isChecked() && !checkBox2.isChecked()
+                        && !checkBox4.isChecked()) {
                     total_score += 1;
                 }
                 break;
             case 8:
-                if (radioButton2.isChecked()) {
+                if (radioButton2.isChecked() &&
+                        !radioButton1.isChecked() && !radioButton3.isChecked()
+                        && !radioButton4.isChecked() && !radioButton5.isChecked()) {
                     total_score += 1;
                 }
                 break;
             case 9:
-                if (checkBox4.isChecked()
-                        && checkBox5.isChecked()) {
+                if (checkBox4.isChecked() && checkBox5.isChecked()
+                        && !checkBox1.isChecked() && !checkBox2.isChecked()
+                        && !checkBox3.isChecked()) {
                     total_score += 1;
                 }
                 break;
@@ -267,8 +305,16 @@ public class MainActivity extends AppCompatActivity {
                     total_score += 1;
                 }
                 break;
+            case 11:    //test
+                EditText editText = findViewById(R.id.edit_text);
+                String bonus_answer = editText.getText().toString();
+                bonus_answer = bonus_answer.toLowerCase();
+                if (bonus_answer.contains("google") && bonus_answer.contains("udacity")) {
+                    setToast("Bonus! (j.k.manggg)");
+                    editText.setVisibility(editText.INVISIBLE);
+                }
+
         }
-        Log.v(TAG, "total iz = " + total_score);
         checkBox1.setChecked(false);
         checkBox2.setChecked(false);
         checkBox3.setChecked(false);
@@ -279,11 +325,28 @@ public class MainActivity extends AppCompatActivity {
         radioButton3.setChecked(false);
         radioButton4.setChecked(false);
         radioButton5.setChecked(false);
-
     }
     /**
-     * depending on which respective @param question_num,
-     * respective text is changed on the possible answers
+     *
+     */
+    public void show_bonus_question() {
+        TextView textView = findViewById(R.id.quiz_question_text_view);
+        EditText editText = findViewById(R.id.edit_text);
+        editText.setVisibility(editText.VISIBLE);
+        editText.setHint("Two companies ;)");
+        editText.setText("");
+        textView.setText("Bonus: Course Sponsors?");
+        String bonus_answer = editText.getText().toString();
+        bonus_answer = bonus_answer.toLowerCase();
+        if (bonus_answer.contains("google") && bonus_answer.contains("udacity")) {
+            setToast("Bonus! (j.k.man)");
+            editText.setVisibility(editText.INVISIBLE);
+        }
+    }
+    /**
+     * depending on which respective @param question_num, respective text is changed on the possible answers
+     * show checkBox answers, hide radioButtons, and vice versa
+     *  added a bonus question that uses freeform
      */
     public void change_answers(int current_question) {
         switch (current_question) {
@@ -306,8 +369,9 @@ public class MainActivity extends AppCompatActivity {
                 showRadioButtons();
                 break;
             case 11:
-                showFinalResult();
-                break;
+                hideRadioButtons();
+                hideCheckBoxes();
+                show_bonus_question();
         }
     }
 
@@ -408,6 +472,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     /**
      * changes the background of the center linear layout depending on the respective total_score
      */
@@ -449,21 +514,30 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     /**
-     * shows the final result of the quiz to user via Toast
+     * shows the final result of the quiz to user via Toast with a message and score out of 10
+     * score shown (big) is an image of that score
+     * hides all radioButtons and checkBoxes
      */
     public void showFinalResult() {
+        String show_score = " / 10";
         hideRadioButtons();
         hideCheckBoxes();
         changeBackground();
         if (total_score == 10) {
-            setToast(getString(R.string.toast_win));
+            show_score = getString(R.string.toast_win) + "\n" + String.valueOf(total_score) + show_score;
+            setToast(show_score);
         } else {
-            setToast(getString(R.string.toast_lose));
+            show_score = getString(R.string.toast_lose) + "\n" + String.valueOf(total_score) + show_score;
+            setToast(show_score);
         }
         changeButtonText();
     }
 
+    /**
+     * sets the Toast message to @param result_message
+     */
     public void setToast(String result_message) {
         Context context = getApplicationContext();
         Toast toast = Toast.makeText(context, result_message, Toast.LENGTH_SHORT);
