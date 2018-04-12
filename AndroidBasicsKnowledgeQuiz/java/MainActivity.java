@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         total_score = 0;
         question_num = 0;
         editText.setVisibility(View.VISIBLE);
-        editText.setHint("What's your name?");//test
+        editText.setHint("What's your name?");
         user_name = "";
         changeButtonText();
     }
@@ -172,49 +172,30 @@ public class MainActivity extends AppCompatActivity {
      * when all questions are finished, everything is reset
      */
     public void buttonClick(View view) {
-        LinearLayout changeBackground = findViewById(R.id.final_background);//test
-        changeBackground.setBackgroundResource(0); //test
+        LinearLayout changeBackground = findViewById(R.id.final_background);
+        changeBackground.setBackgroundResource(0);
         ImageView imageview = findViewById(R.id.android_bg_image_view);
         EditText editText = findViewById(R.id.edit_text);
         TextView textview = findViewById(R.id.quiz_question_text_view);
         if (question_num == 0) {
-            //imageview.setImageResource(R.drawable.android_google_bg); //test
             if (user_name == "") {
                 user_name = editText.getText().toString();
             }
             setToast("Best of Luck\n" + user_name);
         }
-        imageview.setImageResource(0);  //test
-        /* useless
-        if (question_num == 1) {
-            String new_user_name = editText.getText().toString();
-            if (new_user_name != user_name) {
-                user_name = new_user_name;
-                setToast("Best of Luck6\n" + user_name); //test extra 6
-            }
-        }
-        */
-        editText.setText("");//test
-        editText.setVisibility(View.INVISIBLE); //test
+        imageview.setImageResource(0);
+        editText.setText("");
+        editText.setVisibility(View.INVISIBLE);
         changeButtonText();
-        if (question_num == 12) {   //test (go to main page
+        if (question_num == 12) {
             imageview.setImageResource(R.drawable.android_google_bg);
             textview.setText(getString(R.string.welcome_msg));
-            //editText.setText("Name Test Two"); //temp remove
-           // editText.setVisibility(View.VISIBLE); //test + temp remove
         }
-    /*    if (question_num > 12) //fix to 11 after
- temp           resetAll(); */
         checkAnswer(question_num);
         question_num += 1;
-        /* testing purposes only*/
-        final String TAG = "MyActivity";
-        Log.v(TAG, "N = " + user_name);
-        Log.v(TAG, "Q = " + question_num + " Tot = " + total_score);
-        /* */
         changeQuestion(question_num);
-        change_answers(question_num);
-        if (question_num > 12)  //temp yay
+        changeAnswers(question_num);
+        if (question_num > 12)
             resetAll();
     }
 
@@ -305,15 +286,17 @@ public class MainActivity extends AppCompatActivity {
                     total_score += 1;
                 }
                 break;
-            case 11:    //test
+                /*
+                 not sure why case 11 never hits, not enough time to debug!
+                 */
+            case 11:
                 EditText editText = findViewById(R.id.edit_text);
                 String bonus_answer = editText.getText().toString();
                 bonus_answer = bonus_answer.toLowerCase();
                 if (bonus_answer.contains("google") && bonus_answer.contains("udacity")) {
-                    setToast("Bonus! (j.k.manggg)");
+                    setToast("Bonus! (j.k.ma)");
                     editText.setVisibility(editText.INVISIBLE);
                 }
-
         }
         checkBox1.setChecked(false);
         checkBox2.setChecked(false);
@@ -327,7 +310,8 @@ public class MainActivity extends AppCompatActivity {
         radioButton5.setChecked(false);
     }
     /**
-     *
+     * shows bonus question (p.s. the bonus question answer doesn't work, didnt have time to debug)
+     * makes a Toast if correct
      */
     public void show_bonus_question() {
         TextView textView = findViewById(R.id.quiz_question_text_view);
@@ -348,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
      * show checkBox answers, hide radioButtons, and vice versa
      *  added a bonus question that uses freeform
      */
-    public void change_answers(int current_question) {
+    public void changeAnswers(int current_question) {
         switch (current_question) {
             case 1:
             case 2:
