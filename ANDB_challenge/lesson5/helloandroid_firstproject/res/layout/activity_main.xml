@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.helloandroid.MainActivity"
+    android:orientation="vertical"
+    android:background="@android:color/black">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/udacity_scholarship_pic"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp">
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Udacity"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textSize="48sp"
+        android:paddingLeft="24dp"
+        android:textColor="@android:color/white">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2465 Latham St"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:paddingLeft="24dp"
+        android:textColor="@android:color/white">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mountain View, CA 94043"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:paddingLeft="24dp"
+
+        android:textColor="@android:color/white">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="650-555-5555"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:paddingLeft="24dp"
+        android:textColor="@android:color/white">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="www.Udacity.com"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:paddingLeft="24dp"
+        android:textColor="@android:color/white">
+
+    </TextView>
+</LinearLayout>
